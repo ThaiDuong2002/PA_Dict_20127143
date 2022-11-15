@@ -1,10 +1,13 @@
+import Dictionary.SlangDictionary;
+
 /**
- * Created by ${USER}
- * Date ${DATE} - ${TIME}
+ * Created by Thai Duong
+ * Date 11/15/2022 - 9:57 AM
  * Description: ...
  */
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("Hello world!");
+		SlangDictionary slangWord = new SlangDictionary();
+		slangWord.getData();
 	}
 }
