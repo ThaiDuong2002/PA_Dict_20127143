@@ -1,4 +1,4 @@
-import Dictionary.SlangDictionary;
+import GUI.DictionaryInterface;
 
 /**
  * Created by Thai Duong
@@ -7,7 +7,6 @@ import Dictionary.SlangDictionary;
  */
 public class Main {
 	public static void main(String[] args) {
-		SlangDictionary slangWord = new SlangDictionary();
-		slangWord.getData();
+		new DictionaryInterface();
 	}
 }
