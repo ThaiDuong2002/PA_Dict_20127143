@@ -3,15 +3,15 @@ package GUI;
 import javax.swing.*;
 
 /**
- * GUI.SearchPage
+ * GUI
  * Created by Thai Duong
- * Date 11/16/2022 - 11:46 AM
+ * Date 11/16/2022 - 3:38 PM
  * Description: ...
  */
-public class SlangSearchPage extends JFrame {
-	public SlangSearchPage() {
+public class DeleteSlang extends JFrame {
+	public DeleteSlang() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("Slang Search");
+		this.setTitle("Delete Slang");
 		this.setSize(500, 500);
 		this.setLayout(null);
 		this.setVisible(true);

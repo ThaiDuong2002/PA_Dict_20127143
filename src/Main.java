@@ -1,4 +1,4 @@
-import GUI.DictionaryInterface;
+import GUI.DictInterface;
 
 /**
  * Created by Thai Duong
@@ -7,6 +7,6 @@ import GUI.DictionaryInterface;
  */
 public class Main {
 	public static void main(String[] args) {
-		new DictionaryInterface();
+		new DictInterface();
 	}
 }

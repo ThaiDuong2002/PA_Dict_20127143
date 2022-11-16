@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * Date 11/16/2022 - 10:49 AM
  * Description: ...
  */
-public class DictionaryInterface extends JFrame implements ActionListener {
+public class DictInterface extends JFrame implements ActionListener {
 	JButton searchSlangBtn;
 	JButton searchDefinitionBtn;
 	JButton searchHistory;
@@ -23,7 +23,7 @@ public class DictionaryInterface extends JFrame implements ActionListener {
 	JButton slangGameBtn;
 	JButton definitionGameBtn;
 	
-	public DictionaryInterface() {
+	public DictInterface() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Slang Dictionary");
 		
@@ -46,30 +46,39 @@ public class DictionaryInterface extends JFrame implements ActionListener {
 		
 		searchDefinitionBtn = new JButton("Search By Definition");
 		searchDefinitionBtn.setFocusable(false);
+		searchDefinitionBtn.addActionListener(this);
 		
 		searchHistory = new JButton("Search History");
 		searchHistory.setFocusable(false);
+		searchHistory.addActionListener(this);
 		
 		addBtn = new JButton("Add Slang");
 		addBtn.setFocusable(false);
+		addBtn.addActionListener(this);
 		
 		editBtn = new JButton("Edit Slang");
 		editBtn.setFocusable(false);
+		editBtn.addActionListener(this);
 		
 		deleteBtn = new JButton("Delete Slang");
 		deleteBtn.setFocusable(false);
+		deleteBtn.addActionListener(this);
 		
 		resetBtn = new JButton("Reset Dictionary");
 		resetBtn.setFocusable(false);
+		resetBtn.addActionListener(this);
 		
 		randomBtn = new JButton("Random Slang");
 		randomBtn.setFocusable(false);
+		randomBtn.addActionListener(this);
 		
 		slangGameBtn = new JButton("Mini Game (Slang)");
 		slangGameBtn.setFocusable(false);
+		slangGameBtn.addActionListener(this);
 		
 		definitionGameBtn = new JButton("Mini Game (Definition)");
 		definitionGameBtn.setFocusable(false);
+		definitionGameBtn.addActionListener(this);
 		
 		panel.add(searchSlangBtn);
 		panel.add(searchDefinitionBtn);
@@ -90,9 +99,36 @@ public class DictionaryInterface extends JFrame implements ActionListener {
 	}
 	
 	@Override public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == searchSlangBtn) {
+		if (searchSlangBtn.equals(e.getSource())) {
 			this.dispose();
-			SlangSearchPage slangSearchPage = new SlangSearchPage();
+			SearchBySlang slangSearch = new SearchBySlang();
+		} else if (searchDefinitionBtn.equals(e.getSource())) {
+			this.dispose();
+			SearchByDefinition definitionSearch = new SearchByDefinition();
+		} else if (searchHistory.equals(e.getSource())) {
+			this.dispose();
+			SearchHistory history = new SearchHistory();
+		} else if (addBtn.equals(e.getSource())) {
+			this.dispose();
+			AddSlang addSlang = new AddSlang();
+		} else if (editBtn.equals(e.getSource())) {
+			this.dispose();
+			EditSlang editSlang = new EditSlang();
+		} else if (deleteBtn.equals(e.getSource())) {
+			this.dispose();
+			ResetDict resetSlang = new ResetDict();
+		} else if (randomBtn.equals(e.getSource())) {
+			this.dispose();
+			DeleteSlang deleteSlang = new DeleteSlang();
+		} else if (resetBtn.equals(e.getSource())) {
+			this.dispose();
+			RandomSlang randomSlang = new RandomSlang();
+		} else if (slangGameBtn.equals(e.getSource())) {
+			this.dispose();
+			SlangGame slangGame = new SlangGame();
+		} else if (definitionGameBtn.equals(e.getSource())) {
+			this.dispose();
+			DefinitionGame definitionGame = new DefinitionGame();
 		}
 	}
 }
