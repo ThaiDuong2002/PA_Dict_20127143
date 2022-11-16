@@ -1,5 +1,7 @@
 package GUI;
 
+import Dictionary.SlangDictionary;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +14,7 @@ import java.awt.event.ActionListener;
  * Description: ...
  */
 public class DictInterface extends JFrame implements ActionListener {
+	SlangDictionary slangDictionary;
 	JButton searchSlangBtn;
 	JButton searchDefinitionBtn;
 	JButton searchHistory;
@@ -23,9 +26,11 @@ public class DictInterface extends JFrame implements ActionListener {
 	JButton slangGameBtn;
 	JButton definitionGameBtn;
 	
-	public DictInterface() {
+	public DictInterface(SlangDictionary dictionary) {
+		this.slangDictionary = dictionary;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Slang Dictionary");
+		this.setResizable(false);
 		
 		JLabel label = new JLabel();
 		label.setBounds(100, 50, 300, 50);
@@ -101,34 +106,34 @@ public class DictInterface extends JFrame implements ActionListener {
 	@Override public void actionPerformed(ActionEvent e) {
 		if (searchSlangBtn.equals(e.getSource())) {
 			this.dispose();
-			SearchBySlang slangSearch = new SearchBySlang();
+			new SearchBySlang(this.slangDictionary);
 		} else if (searchDefinitionBtn.equals(e.getSource())) {
 			this.dispose();
-			SearchByDefinition definitionSearch = new SearchByDefinition();
+			new SearchByDefinition();
 		} else if (searchHistory.equals(e.getSource())) {
 			this.dispose();
-			SearchHistory history = new SearchHistory();
+			new SearchHistory();
 		} else if (addBtn.equals(e.getSource())) {
 			this.dispose();
-			AddSlang addSlang = new AddSlang();
+			new AddSlang();
 		} else if (editBtn.equals(e.getSource())) {
 			this.dispose();
-			EditSlang editSlang = new EditSlang();
+			new EditSlang();
 		} else if (deleteBtn.equals(e.getSource())) {
 			this.dispose();
-			ResetDict resetSlang = new ResetDict();
+			new ResetDict();
 		} else if (randomBtn.equals(e.getSource())) {
 			this.dispose();
-			DeleteSlang deleteSlang = new DeleteSlang();
+			new DeleteSlang();
 		} else if (resetBtn.equals(e.getSource())) {
 			this.dispose();
-			RandomSlang randomSlang = new RandomSlang();
+			new RandomSlang();
 		} else if (slangGameBtn.equals(e.getSource())) {
 			this.dispose();
-			SlangGame slangGame = new SlangGame();
+			new SlangGame();
 		} else if (definitionGameBtn.equals(e.getSource())) {
 			this.dispose();
-			DefinitionGame definitionGame = new DefinitionGame();
+			new DefinitionGame();
 		}
 	}
 }

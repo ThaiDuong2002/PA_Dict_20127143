@@ -1,3 +1,4 @@
+import Dictionary.SlangDictionary;
 import GUI.DictInterface;
 
 /**
@@ -7,6 +8,8 @@ import GUI.DictInterface;
  */
 public class Main {
 	public static void main(String[] args) {
-		new DictInterface();
+		SlangDictionary slangDictionary = new SlangDictionary();
+		slangDictionary.getData();
+		new DictInterface(slangDictionary);
 	}
 }
