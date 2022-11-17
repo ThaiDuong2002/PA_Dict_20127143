@@ -109,7 +109,7 @@ public class DictInterface extends JFrame implements ActionListener {
 			new SearchBySlang(this.slangDictionary);
 		} else if (searchDefinitionBtn.equals(e.getSource())) {
 			this.dispose();
-			new SearchByDefinition();
+			new SearchByDefinition(this.slangDictionary);
 		} else if (searchHistory.equals(e.getSource())) {
 			this.dispose();
 			new SearchHistory();

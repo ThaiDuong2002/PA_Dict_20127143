@@ -26,7 +26,7 @@ public class SearchBySlang extends JFrame implements ActionListener {
 		this.slangDictionary = dictionary;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
-		this.setTitle("Slang Search");
+		this.setTitle("Search By Slang");
 		
 		JLabel label = new JLabel();
 		label.setBounds(100, 50, 300, 50);
