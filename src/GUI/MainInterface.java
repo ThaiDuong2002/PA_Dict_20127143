@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * Date 11/16/2022 - 10:49 AM
  * Description: ...
  */
-public class DictInterface extends JFrame implements ActionListener {
+public class MainInterface extends JFrame implements ActionListener {
 	SlangDictionary slangDictionary;
 	JButton searchSlangBtn;
 	JButton searchDefinitionBtn;
@@ -26,7 +26,7 @@ public class DictInterface extends JFrame implements ActionListener {
 	JButton slangGameBtn;
 	JButton definitionGameBtn;
 	
-	public DictInterface(SlangDictionary dictionary) {
+	public MainInterface(SlangDictionary dictionary) {
 		this.slangDictionary = dictionary;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Slang Dictionary");
@@ -42,7 +42,7 @@ public class DictInterface extends JFrame implements ActionListener {
 		label.setVerticalAlignment(JLabel.CENTER);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(50, 150, 400, 250);
+		panel.setBounds(50, 130, 400, 250);
 		panel.setLayout(new GridLayout(5, 2, 10, 10));
 		
 		searchSlangBtn = new JButton("Search By Slang");
@@ -112,10 +112,10 @@ public class DictInterface extends JFrame implements ActionListener {
 			new SearchByDefinition(this.slangDictionary);
 		} else if (searchHistory.equals(e.getSource())) {
 			this.dispose();
-			new SearchHistory();
+			new SearchHistory(this.slangDictionary);
 		} else if (addBtn.equals(e.getSource())) {
 			this.dispose();
-			new AddSlang();
+			new AddSlang(this.slangDictionary);
 		} else if (editBtn.equals(e.getSource())) {
 			this.dispose();
 			new EditSlang();

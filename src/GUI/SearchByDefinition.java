@@ -101,15 +101,17 @@ public class SearchByDefinition extends JFrame implements ActionListener {
 	@Override public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == backBtn) {
 			this.dispose();
-			new DictInterface(this.slangDictionary);
+			new MainInterface(this.slangDictionary);
 		} else if (e.getSource() == cancelBtn) {
 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		} else if (e.getSource() == searchBtn) {
 			String word = textField.getText();
 			List<String> items = this.slangDictionary.findByDefinition(word);
-			DefaultListModel<String> temp = new DefaultListModel<>();
-			temp.addAll(items);
-			list.setModel(temp);
+			if (items != null) {
+				DefaultListModel<String> temp = new DefaultListModel<>();
+				temp.addAll(items);
+				list.setModel(temp);
+			}
 		}
 	}
 }

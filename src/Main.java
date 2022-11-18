@@ -1,5 +1,5 @@
 import Dictionary.SlangDictionary;
-import GUI.DictInterface;
+import GUI.MainInterface;
 
 /**
  * Created by Thai Duong
@@ -10,6 +10,6 @@ public class Main {
 	public static void main(String[] args) {
 		SlangDictionary slangDictionary = new SlangDictionary();
 		slangDictionary.getData();
-		new DictInterface(slangDictionary);
+		new MainInterface(slangDictionary);
 	}
 }
