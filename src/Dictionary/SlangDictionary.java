@@ -80,4 +80,37 @@ public class SlangDictionary {
 			return false;
 		}
 	}
+	
+	public void resetDictionary() {
+		dictionary.clear();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("src/Data/default.txt"));
+			String data;
+			while ((data = br.readLine()) != null) {
+				if (data.contains("`")) {
+					String[] item = data.split("`");
+					List<String> temp = new ArrayList<>(Arrays.asList(item[1].split("\\|")));
+					temp.replaceAll(s -> s.replaceAll(" ", ""));
+					dictionary.put(item[0], temp);
+				}
+			}
+			br.close();
+		} catch (Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		}
+	}
+	
+	public String randomSlang() {
+		Random rd = new Random();
+		int randomNumber = rd.nextInt(dictionary.size());
+		int i = 0;
+		String a = null;
+		for (String s : dictionary.keySet()) {
+			if (i == randomNumber) {
+				a = s;
+			}
+			i++;
+		}
+		return a;
+	}
 }
