@@ -21,7 +21,9 @@ public class SlangDictionary {
 			while ((data = br.readLine()) != null) {
 				if (data.contains("`")) {
 					String[] item = data.split("`");
-					dictionary.put(item[0], Arrays.asList(item[1].split("\\|")));
+					List<String> temp = new ArrayList<>(Arrays.asList(item[1].split("\\|")));
+					temp.replaceAll(s -> s.replaceAll(" ", ""));
+					dictionary.put(item[0], temp);
 				}
 			}
 			br.close();
@@ -67,6 +69,15 @@ public class SlangDictionary {
 		} else {
 			dictionary.put(slang, definitions);
 			return true;
+		}
+	}
+	
+	public boolean deleteSlang(String slang) {
+		if (dictionary.containsKey(slang)) {
+			dictionary.remove(slang);
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

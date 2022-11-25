@@ -105,7 +105,7 @@ public class SearchBySlang extends JFrame implements ActionListener {
 		} else if (e.getSource() == cancelBtn) {
 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		} else if (e.getSource() == searchBtn) {
-			String word = textField.getText();
+			String word = textField.getText().replaceAll(" ", "");
 			List<String> items = this.slangDictionary.findBySlangWord(word);
 			if (items != null) {
 				DefaultListModel<String> temp = new DefaultListModel<>();

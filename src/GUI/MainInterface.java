@@ -121,13 +121,13 @@ public class MainInterface extends JFrame implements ActionListener {
 			new EditSlang();
 		} else if (deleteBtn.equals(e.getSource())) {
 			this.dispose();
-			new ResetDict();
+			new DeleteSlang(this.slangDictionary);
 		} else if (randomBtn.equals(e.getSource())) {
 			this.dispose();
-			new DeleteSlang();
+			new RandomSlang();
 		} else if (resetBtn.equals(e.getSource())) {
 			this.dispose();
-			new RandomSlang();
+			new ResetDict();
 		} else if (slangGameBtn.equals(e.getSource())) {
 			this.dispose();
 			new SlangGame();
