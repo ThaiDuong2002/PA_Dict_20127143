@@ -142,7 +142,7 @@ public class DeleteSlang extends JFrame implements ActionListener {
 			yesBtn.setVisible(true);
 			noBtn.setVisible(true);
 		} else if (e.getSource() == yesBtn) {
-			boolean option = this.slangDictionary.deleteSlang(textField.getText());
+			boolean option = this.slangDictionary.deleteSlang(textField.getText().toUpperCase());
 			if (option) {
 				notify1.setVisible(true);
 				notify2.setVisible(false);

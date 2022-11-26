@@ -53,22 +53,16 @@ public class SlangDictionary {
 		return historySearch;
 	}
 	
-	public boolean addSlangWord(String slang, List<String> definitions) {
-		if (dictionary.containsKey(slang)) {
-			System.out.println("Do you want to overwrite (Y/N): ");
-			String confirm = input.nextLine();
-			if (confirm.equals("Y") || confirm.equals("y")) {
-				dictionary.put(slang, definitions);
-				return true;
-			} else {
-				List<String> temp = dictionary.get(slang);
-				temp.addAll(definitions);
-				dictionary.put(slang, temp);
-				return true;
-			}
+	public void addSlangWord(String slang, List<String> definitions, String option) {
+		slang = slang.toUpperCase();
+		if (Objects.equals(option, "overwrite")) {
+			dictionary.put(slang, definitions);
+		} else if (Objects.equals(option, "duplicate")) {
+			List<String> temp = dictionary.get(slang);
+			definitions.addAll(temp);
+			dictionary.put(slang, definitions);
 		} else {
 			dictionary.put(slang, definitions);
-			return true;
 		}
 	}
 	

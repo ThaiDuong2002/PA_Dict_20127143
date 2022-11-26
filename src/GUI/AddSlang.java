@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * GUI
@@ -21,7 +24,7 @@ public class AddSlang extends JFrame implements ActionListener {
 	JButton backBtn, cancelBtn;
 	JButton addBtn;
 	JButton overwriteBtn, duplicateBtn;
-	JLabel notification;
+	JLabel notification, success;
 	
 	public AddSlang(SlangDictionary dictionary) {
 		this.slangDictionary = dictionary;
@@ -94,12 +97,19 @@ public class AddSlang extends JFrame implements ActionListener {
 		duplicateBtn.addActionListener(this);
 		duplicateBtn.setVisible(false);
 		
+		success = new JLabel();
+		success.setText("Add successfully");
+		success.setBounds(150, 240, 400, 30);
+		success.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		success.setVisible(false);
+		
 		panel.add(container1);
 		panel.add(container2);
 		panel.add(slangField);
 		panel.add(definitionField);
 		panel.add(addBtn);
 		panel.add(notification);
+		panel.add(success);
 		panel.add(overwriteBtn);
 		panel.add(duplicateBtn);
 		
@@ -131,13 +141,36 @@ public class AddSlang extends JFrame implements ActionListener {
 		} else if (e.getSource() == cancelBtn) {
 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		} else if (e.getSource() == addBtn) {
+			String d = definitionField.getText();
+			List<String> temp = new ArrayList<>(Arrays.asList(d.split(",")));
+			temp.replaceAll(s -> s.replaceAll(" ", ""));
+			
 			if (this.slangDictionary.findBySlangWord(slangField.getText()) != null) {
 				notification.setVisible(true);
 				overwriteBtn.setVisible(true);
 				duplicateBtn.setVisible(true);
 			} else {
-			
+				this.slangDictionary.addSlangWord(slangField.getText(), temp, "add");
+				success.setVisible(true);
 			}
+		} else if (e.getSource() == overwriteBtn) {
+			String d = definitionField.getText();
+			List<String> temp = new ArrayList<>(Arrays.asList(d.split(",")));
+			temp.replaceAll(s -> s.replaceAll(" ", ""));
+			this.slangDictionary.addSlangWord(slangField.getText(), temp, "overwrite");
+			success.setVisible(true);
+			notification.setVisible(false);
+			overwriteBtn.setVisible(false);
+			duplicateBtn.setVisible(false);
+		} else if (e.getSource() == duplicateBtn) {
+			String d = definitionField.getText();
+			List<String> temp = new ArrayList<>(Arrays.asList(d.split(",")));
+			temp.replaceAll(s -> s.replaceAll(" ", ""));
+			this.slangDictionary.addSlangWord(slangField.getText(), temp, "duplicate");
+			success.setVisible(true);
+			notification.setVisible(false);
+			overwriteBtn.setVisible(false);
+			duplicateBtn.setVisible(false);
 		}
 	}
 }
