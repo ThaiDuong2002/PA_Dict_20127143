@@ -12,8 +12,8 @@ import java.util.*;
 public class SlangDictionary {
 	private static final Hashtable<String, List<String>> dictionary = new Hashtable<>();
 	private static final List<String> historySearch = new ArrayList<>();
-	Scanner input;
 	
+	//Get Data
 	public void getData() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("src/Data/slang.txt"));
@@ -32,12 +32,14 @@ public class SlangDictionary {
 		}
 	}
 	
+	// 1. Find Definition of Slang words
 	public List<String> findBySlangWord(String word) {
 		historySearch.add(word);
 		word = word.toUpperCase();
 		return dictionary.get(word);
 	}
 	
+	// 2. Find all Slang words which have same definition
 	public List<String> findByDefinition(String word) {
 		historySearch.add(word);
 		List<String> slangList = new ArrayList<>();
@@ -49,10 +51,12 @@ public class SlangDictionary {
 		return slangList;
 	}
 	
+	// 3. Get search history
 	public List<String> getHistorySearch() {
 		return historySearch;
 	}
 	
+	// 4. Add or overwrite or duplicate a slang
 	public void addSlangWord(String slang, List<String> definitions, String option) {
 		slang = slang.toUpperCase();
 		if (Objects.equals(option, "overwrite")) {
@@ -66,6 +70,12 @@ public class SlangDictionary {
 		}
 	}
 	
+	// 5. Edit a slang
+	public void editSlang(String slang) {
+	
+	}
+	
+	// 6. Delete a slang
 	public boolean deleteSlang(String slang) {
 		if (dictionary.containsKey(slang)) {
 			dictionary.remove(slang);
@@ -75,6 +85,7 @@ public class SlangDictionary {
 		}
 	}
 	
+	// 7. Reset a dictionary
 	public void resetDictionary() {
 		dictionary.clear();
 		try {
@@ -94,6 +105,7 @@ public class SlangDictionary {
 		}
 	}
 	
+	// 8. Random a slang in dictionary
 	public String randomSlang() {
 		Random rd = new Random();
 		int randomNumber = rd.nextInt(dictionary.size());
@@ -106,5 +118,54 @@ public class SlangDictionary {
 			i++;
 		}
 		return a;
+	}
+	
+	// 9. "Choose a correct definition of the slang" Game
+	public String slangGameA() {
+		Random random = new Random();
+		String data;
+		String word1 = randomSlang();
+		data = word1 + "`";
+		List<String> def1 = dictionary.get(word1);
+		word1 = def1.get(random.nextInt(def1.size()));
+		data += word1 + "`";
+		data += word1 + "|";
+		
+		String word2 = randomSlang();
+		List<String> def2 = dictionary.get(word2);
+		word2 = def2.get(random.nextInt(def2.size()));
+		data += word2 + "|";
+		
+		String word3 = randomSlang();
+		List<String> def3 = dictionary.get(word3);
+		word3 = def3.get(random.nextInt(def3.size()));
+		data += word3 + "|";
+		
+		String word4 = randomSlang();
+		List<String> def4 = dictionary.get(word4);
+		word4 = def4.get(random.nextInt(def4.size()));
+		data += word4;
+		return data;
+	}
+	
+	// 10. "Choose a correct slang of the definition" Game
+	public String slangGameB() {
+		String data;
+		Random random = new Random();
+		String word1 = randomSlang();
+		List<String> def = dictionary.get(word1);
+		data = def.get(random.nextInt(def.size())) + "`";
+		data += word1 + "`";
+		data += word1 + "|";
+		
+		String word2 = randomSlang();
+		data += word2 + "|";
+		
+		String word3 = randomSlang();
+		data += word3 + "|";
+		
+		String word4 = randomSlang();
+		data += word4;
+		return data;
 	}
 }

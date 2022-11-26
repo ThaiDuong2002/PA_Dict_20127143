@@ -17,7 +17,7 @@ import java.awt.event.WindowEvent;
 public class RandomSlang extends JFrame implements ActionListener {
 	SlangDictionary slangDictionary;
 	JButton backBtn, cancelBtn;
-	JList<String> list;
+	JTextField word;
 	JButton randomBtn;
 	public RandomSlang(SlangDictionary dictionary) {
 		this.slangDictionary = dictionary;
@@ -57,11 +57,11 @@ public class RandomSlang extends JFrame implements ActionListener {
 		panel.add(randomBtn);
 		panel.add(container);
 		
-		DefaultListModel<String> model = new DefaultListModel<>();
-		list = new JList<>(model);
-		list.setForeground(Color.BLACK);
-		list.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		list.setBounds(50, 280, 400, 50);
+		word = new JTextField();
+		word.setForeground(Color.BLACK);
+		word.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		word.setBounds(50, 280, 400, 30);
+		word.setEditable(false);
 		
 		backBtn = new JButton("Back");
 		backBtn.setFocusable(false);
@@ -78,7 +78,7 @@ public class RandomSlang extends JFrame implements ActionListener {
 		this.add(label);
 		this.add(backBtn);
 		this.add(cancelBtn);
-		this.add(list);
+		this.add(word);
 		this.add(panel);
 		this.setSize(500, 500);
 		this.setLayout(null);
@@ -92,9 +92,7 @@ public class RandomSlang extends JFrame implements ActionListener {
 		} else if (e.getSource() == cancelBtn) {
 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		} else if (e.getSource() == randomBtn) {
-			DefaultListModel<String> temp = new DefaultListModel<>();
-			temp.addElement(this.slangDictionary.randomSlang());
-			list.setModel(temp);
+			word.setText(this.slangDictionary.randomSlang());
 		}
 	}
 }

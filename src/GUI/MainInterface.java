@@ -118,7 +118,7 @@ public class MainInterface extends JFrame implements ActionListener {
 			new AddSlang(this.slangDictionary);
 		} else if (editBtn.equals(e.getSource())) {
 			this.dispose();
-			new EditSlang();
+			new EditSlang(this.slangDictionary);
 		} else if (deleteBtn.equals(e.getSource())) {
 			this.dispose();
 			new DeleteSlang(this.slangDictionary);
@@ -130,10 +130,10 @@ public class MainInterface extends JFrame implements ActionListener {
 			new ResetDict(this.slangDictionary);
 		} else if (slangGameBtn.equals(e.getSource())) {
 			this.dispose();
-			new SlangGame();
+			new SlangGame(this.slangDictionary);
 		} else if (definitionGameBtn.equals(e.getSource())) {
 			this.dispose();
-			new DefinitionGame();
+			new DefinitionGame(this.slangDictionary);
 		}
 	}
 }
