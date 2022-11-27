@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * GUI
@@ -14,17 +16,12 @@ import java.awt.event.ActionListener;
  * Description: ...
  */
 public class MainInterface extends JFrame implements ActionListener {
-	SlangDictionary slangDictionary;
-	JButton searchSlangBtn;
-	JButton searchDefinitionBtn;
-	JButton searchHistory;
-	JButton addBtn;
-	JButton editBtn;
-	JButton deleteBtn;
-	JButton resetBtn;
-	JButton randomBtn;
-	JButton slangGameBtn;
-	JButton definitionGameBtn;
+	private final SlangDictionary slangDictionary;
+	private final JButton searchSlangBtn, searchDefinitionBtn, searchHistory;
+	private final JButton addBtn, editBtn, deleteBtn;
+	private final JButton resetBtn, randomBtn;
+	private final JButton slangGameBtn, definitionGameBtn;
+	private final JButton cancelBtn;
 	
 	public MainInterface(SlangDictionary dictionary) {
 		this.slangDictionary = dictionary;
@@ -96,11 +93,25 @@ public class MainInterface extends JFrame implements ActionListener {
 		panel.add(slangGameBtn);
 		panel.add(definitionGameBtn);
 		
+		cancelBtn = new JButton("Cancel");
+		cancelBtn.setFocusable(false);
+		cancelBtn.setBounds(200, 400, 100, 30);
+		cancelBtn.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		cancelBtn.addActionListener(this);
+		
 		this.add(label);
 		this.add(panel);
+		this.add(cancelBtn);
 		this.setSize(500, 500);
 		this.setLayout(null);
 		this.setVisible(true);
+		this.addWindowListener(new WindowAdapter() {
+			@Override public void windowClosing(WindowEvent e) {
+				slangDictionary.updateData();
+				slangDictionary.updateHistory();
+				super.windowClosing(e);
+			}
+		});
 	}
 	
 	@Override public void actionPerformed(ActionEvent e) {
@@ -134,6 +145,8 @@ public class MainInterface extends JFrame implements ActionListener {
 		} else if (definitionGameBtn.equals(e.getSource())) {
 			this.dispose();
 			new DefinitionGame(this.slangDictionary);
+		} else if (e.getSource() == cancelBtn) {
+			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		}
 	}
 }

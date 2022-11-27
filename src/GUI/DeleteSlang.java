@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
@@ -15,11 +16,11 @@ import java.awt.event.WindowEvent;
  * Description: ...
  */
 public class DeleteSlang extends JFrame implements ActionListener {
-	SlangDictionary slangDictionary;
-	JButton backBtn, cancelBtn;
-	JTextField textField;
-	JLabel question, notify1, notify2;
-	JButton deleteBtn, yesBtn, noBtn;
+	private final SlangDictionary slangDictionary;
+	private final JButton backBtn, cancelBtn;
+	private final JTextField textField;
+	private final JLabel question, notify1, notify2;
+	private final JButton deleteBtn, yesBtn, noBtn;
 	
 	public DeleteSlang(SlangDictionary dictionary) {
 		this.slangDictionary = dictionary;
@@ -129,6 +130,13 @@ public class DeleteSlang extends JFrame implements ActionListener {
 		this.setSize(500, 500);
 		this.setLayout(null);
 		this.setVisible(true);
+		this.addWindowListener(new WindowAdapter() {
+			@Override public void windowClosing(WindowEvent e) {
+				slangDictionary.updateData();
+				slangDictionary.updateHistory();
+				super.windowClosing(e);
+			}
+		});
 	}
 	
 	@Override public void actionPerformed(ActionEvent e) {

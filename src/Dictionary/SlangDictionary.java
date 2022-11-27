@@ -32,15 +32,51 @@ public class SlangDictionary {
 		}
 	}
 	
+	// Get History
+	public void getHistory() {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("src/Data/history.txt"));
+			String line;
+			while ((line = br.readLine()) != null) {
+				historySearch.add(line);
+			}
+			br.close();
+		} catch (Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		}
+	}
+	
 	// 1. Find Definition of Slang words
 	public List<String> findBySlangWord(String word) {
+		for (int i = 0; i < historySearch.size(); i++) {
+			if (Objects.equals(historySearch.get(i), word)) {
+				word = word.toUpperCase();
+				return dictionary.get(word);
+			}
+		}
 		historySearch.add(word);
+		word = word.toUpperCase();
+		return dictionary.get(word);
+	}
+	
+	public List<String> getDefinition(String word) {
 		word = word.toUpperCase();
 		return dictionary.get(word);
 	}
 	
 	// 2. Find all Slang words which have same definition
 	public List<String> findByDefinition(String word) {
+		for (int i = 0; i < historySearch.size(); i++) {
+			if (Objects.equals(historySearch.get(i), word)) {
+				List<String> slangList = new ArrayList<>();
+				for (String s : dictionary.keySet()) {
+					if (dictionary.get(s).contains(word)) {
+						slangList.add(s);
+					}
+				}
+				return slangList;
+			}
+		}
 		historySearch.add(word);
 		List<String> slangList = new ArrayList<>();
 		for (String s : dictionary.keySet()) {
@@ -71,8 +107,52 @@ public class SlangDictionary {
 	}
 	
 	// 5. Edit a slang
-	public void editSlang(String slang) {
-	
+	public void editSlang(String slang, String definition, String newDefinition, String option) {
+		slang = slang.toUpperCase();
+		if (Objects.equals(option, "replace")) {
+			if (dictionary.get(slang) == null) {
+				return;
+			} else {
+				List<String> data = dictionary.get(slang);
+				dictionary.remove(slang);
+				for (int i = 0; i < data.size(); i++) {
+					if (Objects.equals(data.get(i), definition)) {
+						data.add(newDefinition);
+						data.remove(i);
+						break;
+					}
+				}
+				dictionary.put(slang, data);
+			}
+		} else if (Objects.equals(option, "delete")) {
+			if (dictionary.get(slang) == null) {
+				return;
+			} else {
+				List<String> data = dictionary.get(slang);
+				dictionary.remove(slang);
+				for (int i = 0; i < data.size(); i++) {
+					if (Objects.equals(data.get(i), definition)) {
+						data.remove(i);
+						break;
+					}
+				}
+				dictionary.put(slang, data);
+			}
+		} else {
+			if (dictionary.get(slang) == null) {
+				return;
+			} else {
+				List<String> data = dictionary.get(slang);
+				dictionary.remove(slang);
+				for (int i = 0; i < data.size(); i++) {
+					if (Objects.equals(data.get(i), newDefinition)) {
+						return;
+					}
+				}
+				data.add(newDefinition);
+				dictionary.put(slang, data);
+			}
+		}
 	}
 	
 	// 6. Delete a slang
@@ -167,5 +247,39 @@ public class SlangDictionary {
 		String word4 = randomSlang();
 		data += word4;
 		return data;
+	}
+	
+	// Update Data
+	public void updateData() {
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter("src/Data/slang.txt"));
+			for (String s : dictionary.keySet()) {
+				bw.write(s + "`");
+				List<String> temp = dictionary.get(s);
+				for (int i = 0; i < temp.size(); i++) {
+					bw.write(temp.get(i));
+					if (i + 1 < temp.size()) {
+						bw.write("|");
+					}
+				}
+				bw.write("\n");
+			}
+			bw.close();
+		} catch (Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		}
+	}
+	
+	// Update History
+	public void updateHistory() {
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter("src/Data/history.txt"));
+			for (String temp : historySearch) {
+				bw.write(temp + "\n");
+			}
+			bw.close();
+		} catch (Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		}
 	}
 }

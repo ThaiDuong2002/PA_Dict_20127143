@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public class AddSlang extends JFrame implements ActionListener {
 	public AddSlang(SlangDictionary dictionary) {
 		this.slangDictionary = dictionary;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("Slang Search");
+		this.setTitle("Add Slang");
 		this.setResizable(false);
 		
 		JLabel label = new JLabel();
@@ -50,7 +51,6 @@ public class AddSlang extends JFrame implements ActionListener {
 		
 		JLabel container1 = new JLabel();
 		container1.setText("Input the new Slang");
-		container1.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		container1.setForeground(Color.BLACK);
 		container1.setBounds(50, 0, 300, 50);
 		
@@ -60,8 +60,7 @@ public class AddSlang extends JFrame implements ActionListener {
 		slangField.setForeground(Color.BLACK);
 		
 		JLabel container2 = new JLabel();
-		container2.setText("Input the Definition");
-		container2.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		container2.setText("Input the Definition (use \",\" for multiple word)");
 		container2.setForeground(Color.BLACK);
 		container2.setBounds(50, 60, 300, 50);
 		
@@ -132,6 +131,13 @@ public class AddSlang extends JFrame implements ActionListener {
 		this.setSize(500, 500);
 		this.setLayout(null);
 		this.setVisible(true);
+		this.addWindowListener(new WindowAdapter() {
+			@Override public void windowClosing(WindowEvent e) {
+				slangDictionary.updateData();
+				slangDictionary.updateHistory();
+				super.windowClosing(e);
+			}
+		});
 	}
 	
 	@Override public void actionPerformed(ActionEvent e) {

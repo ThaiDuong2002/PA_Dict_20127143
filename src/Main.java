@@ -10,6 +10,7 @@ public class Main {
 	public static void main(String[] args) {
 		SlangDictionary slangDictionary = new SlangDictionary();
 		slangDictionary.getData();
+		slangDictionary.getHistory();
 		new MainInterface(slangDictionary);
 	}
 }

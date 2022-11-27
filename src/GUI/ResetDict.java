@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
@@ -15,10 +16,10 @@ import java.awt.event.WindowEvent;
  * Description: ...
  */
 public class ResetDict extends JFrame implements ActionListener {
-	SlangDictionary slangDictionary;
-	JButton backBtn, cancelBtn;
-	JButton resetBtn;
-	JLabel notify;
+	private final SlangDictionary slangDictionary;
+	private final JButton backBtn, cancelBtn;
+	private final JButton resetBtn;
+	private final JLabel notify;
 	
 	public ResetDict(SlangDictionary dictionary) {
 		this.slangDictionary = dictionary;
@@ -84,6 +85,13 @@ public class ResetDict extends JFrame implements ActionListener {
 		this.setSize(500, 500);
 		this.setLayout(null);
 		this.setVisible(true);
+		this.addWindowListener(new WindowAdapter() {
+			@Override public void windowClosing(WindowEvent e) {
+				slangDictionary.updateData();
+				slangDictionary.updateHistory();
+				super.windowClosing(e);
+			}
+		});
 	}
 	
 	@Override public void actionPerformed(ActionEvent e) {

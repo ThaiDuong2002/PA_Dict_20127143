@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.*;
 import java.util.List;
@@ -17,13 +18,13 @@ import java.util.List;
  * Description: ...
  */
 public class SlangGame extends JFrame implements ActionListener {
-	SlangDictionary slangDictionary;
-	JButton backBtn, cancelBtn;
-	JButton aBtn, bBtn, cBtn, dBtn;
-	JButton checkBtn, nextBtn;
-	JLabel correct, wrong;
-	JTextField word, answerField;
-	String gameAnswer;
+	private final SlangDictionary slangDictionary;
+	private final JButton backBtn, cancelBtn;
+	private final JButton aBtn, bBtn, cBtn, dBtn;
+	private final JButton checkBtn, nextBtn;
+	private final JLabel correct, wrong;
+	private final JTextField answerField;
+	private final String gameAnswer;
 	
 	public SlangGame(SlangDictionary dictionary) {
 		this.slangDictionary = dictionary;
@@ -51,7 +52,7 @@ public class SlangGame extends JFrame implements ActionListener {
 		question.setText("What is the definition of");
 		question.setBounds(130, 10, 200, 30);
 		
-		word = new JTextField();
+		JTextField word = new JTextField();
 		word.setEditable(false);
 		word.setBounds(150, 40, 100, 30);
 		
@@ -156,6 +157,13 @@ public class SlangGame extends JFrame implements ActionListener {
 		this.setSize(500, 500);
 		this.setLayout(null);
 		this.setVisible(true);
+		this.addWindowListener(new WindowAdapter() {
+			@Override public void windowClosing(WindowEvent e) {
+				slangDictionary.updateData();
+				slangDictionary.updateHistory();
+				super.windowClosing(e);
+			}
+		});
 	}
 	
 	@Override public void actionPerformed(ActionEvent e) {

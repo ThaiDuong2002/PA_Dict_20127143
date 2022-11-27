@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
@@ -16,11 +17,11 @@ import java.util.List;
  * Description: ...
  */
 public class SearchBySlang extends JFrame implements ActionListener {
-	SlangDictionary slangDictionary;
-	JButton searchBtn;
-	JButton backBtn, cancelBtn;
-	JTextField textField;
-	JList<String> list;
+	private final SlangDictionary slangDictionary;
+	private final JButton searchBtn;
+	private final JButton backBtn, cancelBtn;
+	private final JTextField textField;
+	private final JList<String> list;
 	
 	public SearchBySlang(SlangDictionary dictionary) {
 		this.slangDictionary = dictionary;
@@ -96,6 +97,13 @@ public class SearchBySlang extends JFrame implements ActionListener {
 		this.setSize(500, 500);
 		this.setLayout(null);
 		this.setVisible(true);
+		this.addWindowListener(new WindowAdapter() {
+			@Override public void windowClosing(WindowEvent e) {
+				slangDictionary.updateData();
+				slangDictionary.updateHistory();
+				super.windowClosing(e);
+			}
+		});
 	}
 	
 	@Override public void actionPerformed(ActionEvent e) {
