@@ -22,7 +22,8 @@ public class SlangDictionary {
 				if (data.contains("`")) {
 					String[] item = data.split("`");
 					List<String> temp = new ArrayList<>(Arrays.asList(item[1].split("\\|")));
-					temp.replaceAll(s -> s.replaceAll(" ", ""));
+					temp.replaceAll(String::stripLeading);
+					temp.replaceAll(String::stripTrailing);
 					dictionary.put(item[0], temp);
 				}
 			}
@@ -44,6 +45,11 @@ public class SlangDictionary {
 		} catch (Exception ex) {
 			System.out.println("Error: " + ex.getMessage());
 		}
+	}
+	
+	// Clear Search History
+	public void clearHistory() {
+		historySearch.clear();
 	}
 	
 	// 1. Find Definition of Slang words
@@ -70,8 +76,12 @@ public class SlangDictionary {
 			if (Objects.equals(historySearch.get(i), word)) {
 				List<String> slangList = new ArrayList<>();
 				for (String s : dictionary.keySet()) {
-					if (dictionary.get(s).contains(word)) {
-						slangList.add(s);
+					List<String> values = dictionary.get(s);
+					for (String data : values) {
+						if (data.contains(word)) {
+							slangList.add(s);
+							break;
+						}
 					}
 				}
 				return slangList;
@@ -80,8 +90,12 @@ public class SlangDictionary {
 		historySearch.add(word);
 		List<String> slangList = new ArrayList<>();
 		for (String s : dictionary.keySet()) {
-			if (dictionary.get(s).contains(word)) {
-				slangList.add(s);
+			List<String> values = dictionary.get(s);
+			for (String data : values) {
+				if (data.contains(word)) {
+					slangList.add(s);
+					break;
+				}
 			}
 		}
 		return slangList;
@@ -98,9 +112,13 @@ public class SlangDictionary {
 		if (Objects.equals(option, "overwrite")) {
 			dictionary.put(slang, definitions);
 		} else if (Objects.equals(option, "duplicate")) {
-			List<String> temp = dictionary.get(slang);
-			definitions.addAll(temp);
-			dictionary.put(slang, definitions);
+			List<String> data = new ArrayList<>(dictionary.get(slang));
+			for (String s : definitions) {
+				if (!data.contains(s)) {
+					data.add(s);
+				}
+			}
+			dictionary.put(slang, data);
 		} else {
 			dictionary.put(slang, definitions);
 		}
@@ -175,7 +193,8 @@ public class SlangDictionary {
 				if (data.contains("`")) {
 					String[] item = data.split("`");
 					List<String> temp = new ArrayList<>(Arrays.asList(item[1].split("\\|")));
-					temp.replaceAll(s -> s.replaceAll(" ", ""));
+					temp.replaceAll(String::stripLeading);
+					temp.replaceAll(String::stripTrailing);
 					dictionary.put(item[0], temp);
 				}
 			}
@@ -193,7 +212,7 @@ public class SlangDictionary {
 		String a = null;
 		for (String s : dictionary.keySet()) {
 			if (i == randomNumber) {
-				a = s;
+				a = s + ": " + dictionary.get(s).toString();
 			}
 			i++;
 		}

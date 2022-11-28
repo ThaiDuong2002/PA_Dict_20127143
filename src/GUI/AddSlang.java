@@ -147,10 +147,11 @@ public class AddSlang extends JFrame implements ActionListener {
 		} else if (e.getSource() == cancelBtn) {
 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		} else if (e.getSource() == addBtn) {
+			success.setVisible(false);
 			String d = definitionField.getText();
 			List<String> temp = new ArrayList<>(Arrays.asList(d.split(",")));
-			temp.replaceAll(s -> s.replaceAll(" ", ""));
-			
+			temp.replaceAll(String::stripLeading);
+			temp.replaceAll(String::stripTrailing);
 			if (this.slangDictionary.findBySlangWord(slangField.getText()) != null) {
 				notification.setVisible(true);
 				overwriteBtn.setVisible(true);
@@ -162,7 +163,8 @@ public class AddSlang extends JFrame implements ActionListener {
 		} else if (e.getSource() == overwriteBtn) {
 			String d = definitionField.getText();
 			List<String> temp = new ArrayList<>(Arrays.asList(d.split(",")));
-			temp.replaceAll(s -> s.replaceAll(" ", ""));
+			temp.replaceAll(String::stripLeading);
+			temp.replaceAll(String::stripTrailing);
 			this.slangDictionary.addSlangWord(slangField.getText(), temp, "overwrite");
 			success.setVisible(true);
 			notification.setVisible(false);
@@ -171,7 +173,8 @@ public class AddSlang extends JFrame implements ActionListener {
 		} else if (e.getSource() == duplicateBtn) {
 			String d = definitionField.getText();
 			List<String> temp = new ArrayList<>(Arrays.asList(d.split(",")));
-			temp.replaceAll(s -> s.replaceAll(" ", ""));
+			temp.replaceAll(String::stripLeading);
+			temp.replaceAll(String::stripTrailing);
 			this.slangDictionary.addSlangWord(slangField.getText(), temp, "duplicate");
 			success.setVisible(true);
 			notification.setVisible(false);

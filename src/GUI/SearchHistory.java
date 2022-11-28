@@ -17,7 +17,9 @@ import java.awt.event.WindowEvent;
  */
 public class SearchHistory extends JFrame implements ActionListener {
 	private final SlangDictionary slangDictionary;
-	private final JButton backBtn, cancelBtn;
+	private final JButton backBtn, cancelBtn, clearButton;
+	private final JList<String> list;
+	private final DefaultListModel<String> model;
 	
 	public SearchHistory(SlangDictionary dictionary) {
 		this.slangDictionary = dictionary;
@@ -47,9 +49,9 @@ public class SearchHistory extends JFrame implements ActionListener {
 		cancelBtn.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		cancelBtn.addActionListener(this);
 		
-		DefaultListModel<String> model = new DefaultListModel<>();
+		model = new DefaultListModel<>();
 		model.addAll(this.slangDictionary.getHistorySearch());
-		JList<String> list = list = new JList<>(model);
+		list = new JList<>(model);
 		list.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		
 		JScrollPane scrollPane = new JScrollPane(list);
@@ -57,10 +59,16 @@ public class SearchHistory extends JFrame implements ActionListener {
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBounds(100, 100, 300, 250);
 		
+		clearButton = new JButton("Clear");
+		clearButton.setFocusable(false);
+		clearButton.setBounds(200, 400, 100, 30);
+		clearButton.addActionListener(this);
+		
 		this.add(label);
 		this.add(scrollPane);
 		this.add(backBtn);
 		this.add(cancelBtn);
+		this.add(clearButton);
 		this.setSize(500, 500);
 		this.setLayout(null);
 		this.setVisible(true);
@@ -79,6 +87,10 @@ public class SearchHistory extends JFrame implements ActionListener {
 			new MainInterface(this.slangDictionary);
 		} else if (e.getSource() == cancelBtn) {
 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		} else if (e.getSource() == clearButton) {
+			this.slangDictionary.clearHistory();
+			model.removeAllElements();
+			list.setModel(model);
 		}
 	}
 }

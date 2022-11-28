@@ -23,7 +23,7 @@ public class EditSlang extends JFrame implements ActionListener {
 	private final JButton replaceConfirm, deleteConfirm, addConfirm;
 	private final JList<String> definitionList;
 	private final JTextField editSlang, editDefinition;
-	private final JLabel definitionLabel, replaceLabel, addLabel;
+	private final JLabel definitionLabel, replaceLabel, addLabel, deleteLabel;
 	private final JScrollPane scrollPane;
 	
 	public EditSlang(SlangDictionary dictionary) {
@@ -124,6 +124,11 @@ public class EditSlang extends JFrame implements ActionListener {
 		addConfirm.setFocusable(false);
 		addConfirm.addActionListener(this);
 		
+		deleteLabel = new JLabel();
+		deleteLabel.setText("This slang only have 1 definition. Can't delete.");
+		deleteLabel.setBounds(70, 250, 300, 30);
+		deleteLabel.setVisible(false);
+		
 		panel.add(slangLabel);
 		panel.add(editSlang);
 		panel.add(editDefinition);
@@ -138,6 +143,7 @@ public class EditSlang extends JFrame implements ActionListener {
 		panel.add(deleteConfirm);
 		panel.add(addLabel);
 		panel.add(addConfirm);
+		panel.add(deleteLabel);
 		
 		backBtn = new JButton("Back");
 		backBtn.setFocusable(false);
@@ -183,6 +189,7 @@ public class EditSlang extends JFrame implements ActionListener {
 			deleteConfirm.setVisible(false);
 			addLabel.setVisible(false);
 			addConfirm.setVisible(false);
+			deleteLabel.setVisible(false);
 		} else if (e.getSource() == replaceBtn) {
 			definitionLabel.setText("Definitions of " +
 											editSlang.getText() +
@@ -197,6 +204,7 @@ public class EditSlang extends JFrame implements ActionListener {
 			deleteConfirm.setVisible(false);
 			addLabel.setVisible(false);
 			addConfirm.setVisible(false);
+			deleteLabel.setVisible(false);
 			List<String> items = this.slangDictionary.getDefinition(editSlang.getText());
 			if (items != null) {
 				DefaultListModel<String> temp = new DefaultListModel<>();
@@ -230,6 +238,7 @@ public class EditSlang extends JFrame implements ActionListener {
 			deleteConfirm.setVisible(true);
 			addLabel.setVisible(false);
 			addConfirm.setVisible(false);
+			deleteLabel.setVisible(false);
 			List<String> items = this.slangDictionary.getDefinition(editSlang.getText());
 			if (items != null) {
 				DefaultListModel<String> temp = new DefaultListModel<>();
@@ -237,12 +246,17 @@ public class EditSlang extends JFrame implements ActionListener {
 				definitionList.setModel(temp);
 			}
 		} else if (e.getSource() == deleteConfirm) {
-			this.slangDictionary.editSlang(
-					  editSlang.getText(),
-					  definitionList.getSelectedValue(),
-					  "",
-					  "delete"
-			);
+			if (definitionList.getModel().getSize() == 1) {
+				deleteLabel.setVisible(true);
+			} else {
+				this.slangDictionary.editSlang(
+						  editSlang.getText(),
+						  definitionList.getSelectedValue(),
+						  "",
+						  "delete"
+				);
+				deleteLabel.setVisible(false);
+			}
 			List<String> items = this.slangDictionary.getDefinition(editSlang.getText());
 			if (items != null) {
 				DefaultListModel<String> temp = new DefaultListModel<>();

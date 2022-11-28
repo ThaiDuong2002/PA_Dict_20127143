@@ -119,6 +119,10 @@ public class SearchBySlang extends JFrame implements ActionListener {
 				DefaultListModel<String> temp = new DefaultListModel<>();
 				temp.addAll(items);
 				list.setModel(temp);
+			} else {
+				DefaultListModel<String> temp = new DefaultListModel<>();
+				temp.addElement(textField.getText() + " doesn't exist.");
+				list.setModel(temp);
 			}
 		}
 	}
