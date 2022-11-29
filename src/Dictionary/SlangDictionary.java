@@ -219,28 +219,42 @@ public class SlangDictionary {
 		return a;
 	}
 	
+	public String randomWord() {
+		Random rd = new Random();
+		int randomNumber = rd.nextInt(dictionary.size());
+		int i = 0;
+		String a = null;
+		for (String s : dictionary.keySet()) {
+			if (i == randomNumber) {
+				a = s;
+			}
+			i++;
+		}
+		return a;
+	}
+	
 	// 9. "Choose a correct definition of the slang" Game
 	public String slangGameA() {
 		Random random = new Random();
 		String data;
-		String word1 = randomSlang();
+		String word1 = randomWord();
 		data = word1 + "`";
 		List<String> def1 = dictionary.get(word1);
 		word1 = def1.get(random.nextInt(def1.size()));
 		data += word1 + "`";
 		data += word1 + "|";
 		
-		String word2 = randomSlang();
+		String word2 = randomWord();
 		List<String> def2 = dictionary.get(word2);
 		word2 = def2.get(random.nextInt(def2.size()));
 		data += word2 + "|";
 		
-		String word3 = randomSlang();
+		String word3 = randomWord();
 		List<String> def3 = dictionary.get(word3);
 		word3 = def3.get(random.nextInt(def3.size()));
 		data += word3 + "|";
 		
-		String word4 = randomSlang();
+		String word4 = randomWord();
 		List<String> def4 = dictionary.get(word4);
 		word4 = def4.get(random.nextInt(def4.size()));
 		data += word4;
@@ -251,19 +265,19 @@ public class SlangDictionary {
 	public String slangGameB() {
 		String data;
 		Random random = new Random();
-		String word1 = randomSlang();
+		String word1 = randomWord();
 		List<String> def = dictionary.get(word1);
 		data = def.get(random.nextInt(def.size())) + "`";
 		data += word1 + "`";
 		data += word1 + "|";
 		
-		String word2 = randomSlang();
+		String word2 = randomWord();
 		data += word2 + "|";
 		
-		String word3 = randomSlang();
+		String word3 = randomWord();
 		data += word3 + "|";
 		
-		String word4 = randomSlang();
+		String word4 = randomWord();
 		data += word4;
 		return data;
 	}
